@@ -49,4 +49,6 @@ class Route
 		header("Status: 404 Not Found");
 		header('Location:'.$host.'404');
     }
+
+
 }

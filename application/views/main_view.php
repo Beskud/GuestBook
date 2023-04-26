@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!isset($_SESSION['auth']) || $_SESSION['auth'] == false) {
-    header("Location: authorization.php");
+    header("Location: http://guestbook/authorization");
 
 }
 ?>
@@ -16,12 +16,13 @@ if (!isset($_SESSION['auth']) || $_SESSION['auth'] == false) {
 </head>
 
 <body>
-    <form name="comment" action="" method="post"></form>
+
 
     <header>
         <div style='display:flex;align-items:center;'>
             <img src="https://www.veryicon.com/download/png/internet--web/iview-3-x-icons/logo-apple?s=256"
                 style="width: 52px;">
+                
             <div style='display:flex; margin-left: 40px;'>
                 <input class="search" type="search" placeholder="Search" style="width: 300px;height: 50px;">
                 <input class="search-button" type="button" style="width: 70px;height: 50px; padding-left: 35px;">
@@ -38,13 +39,13 @@ if (!isset($_SESSION['auth']) || $_SESSION['auth'] == false) {
                     if ($_SESSION['auth']) {
                         echo $_SESSION['user_data']['username'];
                     } else {
-                        echo '<a href="authorization.php" style="  
+                        echo '<a href="http://guestbook/authorization" style="  
                         margin-left: 20%;
                         text-decoration: none;
                         font-size: xx-large;
                         font-family: monospace;
                         color: teal;">Authorization</a>
-                        <a href="registration.php" style="  
+                        <a href="http://guestbook/registration" style="  
                         margin-left: 10%;
                         text-decoration: none;
                         font-size: xx-large;
@@ -54,7 +55,7 @@ if (!isset($_SESSION['auth']) || $_SESSION['auth'] == false) {
                     ?>
                 </h3>
 
-                <a href="logout.php" style="  
+                <a href="http://guestbook/logout" style="  
                     margin-left: 10%;
                     text-decoration: none;
                     font-size: x-large;
@@ -71,6 +72,7 @@ if (!isset($_SESSION['auth']) || $_SESSION['auth'] == false) {
             style="width: 500px;">
 
     </div>
+
 
     <div>
         <p>
@@ -91,5 +93,5 @@ if (!isset($_SESSION['auth']) || $_SESSION['auth'] == false) {
     </div>
 
 </body>
-<script src="script_comm.js"></script>
+<script src="/application/Public/Scripts/script_comm.js"></script>
 </html>

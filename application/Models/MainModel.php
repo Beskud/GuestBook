@@ -1,20 +1,43 @@
 <?php
 
 namespace Models;
-use Core\Model;
-use PDO;
-class AuthorizationModel extends Model
-{ 
-    function getUser($email, $password) {
 
+use Core\Model;
+use Exception;
+
+
+class MainModel extends Model
+{
+    public function setComment($username, $text_comment)
+    {
+        $response = [];
+
+        try {
+    
+            $name = htmlspecialchars($username);
             $sth = $this->dbh->prepare(
-                "SELECT * FROM Users WHERE email = :email"
+                "INSERT INTO Comment(text_comment, name) 
+                    VALUES (:text_comment, :name)"
             );
 
-            $sth->bindParam(':email', $email);
+            $sth->bindParam(':text_comment', $text_comment);
+            $sth->bindParam(':name', $name);
             $sth->execute();
-            $user = $sth->fetch(PDO::FETCH_ASSOC);
-            return $user;
+            $response['status'] = 'success';
+        } catch (Exception $e) {
+            $response['status'] = 'error';
+            $response['message'] = $e->getMessage();
+        }
+        return $response;
+    }
+
+    public function GetComment()
+    {
+        if( $response['status'] = 'success'){
+        $sth=$this->dbh->prepare (
+            "SELECT * FROM Users"
+        );
+        return $sth;
+        }
     }
 }
-  

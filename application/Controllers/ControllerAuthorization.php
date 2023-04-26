@@ -8,12 +8,14 @@ class ControllerAuthorization extends Controller
 {
 	function actionIndex()
 	{	
+		if (isset($_SESSION['auth']) && $_SESSION['auth']) header("Location: http://guestbook/main");
 		$this->view->generate('authorization_view.php', 'template_view.php');
+		
 	}
 
 	function actionAuthorization()
 	{
-		if (isset($_SESSION['auth']) && $_SESSION['auth']) header("Location: index.php");
+		if (isset($_SESSION['auth']) && $_SESSION['auth']) header("Location: http://guestbook/authorization");
 
 		if (isset($_POST['email']) && isset($_POST['password'])) {
 			
@@ -29,11 +31,7 @@ class ControllerAuthorization extends Controller
 					$_SESSION['auth'] = true;
 					$_SESSION['user_data'] = $user;
 				}
-
-				var_dump('auth');
-				die();
-
-				header("Location: index.php");
+				header("Location: http://guestbook/main");
 			} else {
 				$error = 'Неправильный email или пароль.';
 			}

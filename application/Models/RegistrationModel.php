@@ -10,8 +10,6 @@ class RegistrationModel extends Model
     function setUser($email, $username, $password)
     {
 
-        $this->dbh = new PDO('mysql:host=localhost;dbname=page', 'root', '');
-        $this->dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         try {
             $password_hash = password_hash($password, PASSWORD_DEFAULT);
             $sth = $this->dbh->prepare(

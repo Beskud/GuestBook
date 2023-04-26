@@ -9,14 +9,14 @@ class ControllerRegistration extends Controller
 {
 	function actionIndex()
 	{
+		if (isset($_SESSION['auth']) && $_SESSION['auth'])  header("Location:http://guestbook/main");
 		$this->view->generate('registration_view.php', 'template_view.php');
 	}
 
-
 	function actionRegistration()
 	{
-		if (isset($_SESSION['auth']) && $_SESSION['auth'])  header("Location: index.php");
-        
+		if (isset($_SESSION['auth']) && $_SESSION['auth'])  header("Location:http://guestbook/main");
+			
 		$pregPass = [
 			'digits' => '@[0-9]@',
 			'capital letters' => '#[A-Z]+#',
@@ -49,23 +49,14 @@ class ControllerRegistration extends Controller
 				}
 			}
 
-
-
-
 			$registrationModel = new RegistrationModel();
-
 			$setUser = $registrationModel->setUser($email,$username,$password);
-
-
 
 			if (!$setUser) {
 				$error_validation['email'] = 'This email or username already exists';
-			} 
-			var_dump('succes');
-			die();
+			}
 
-
-			header("Location: index.php");
+			header("Location: http://guestbook/main");
 		}
 	}
 }
