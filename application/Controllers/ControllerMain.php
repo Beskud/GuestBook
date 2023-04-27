@@ -27,17 +27,15 @@ class ControllerMain extends Controller
             $response['status'] = 'success';
             echo json_encode($response);
         } else {
-        
             $response['status'] = 'bad';
             echo json_encode($response);
         }
     }
     public function actionGetComment()
-    
-    {    $response['status'] = 'success';
-        echo json_encode($response);
+    {    
         $GetComment = new MainModel();
         $comment = $GetComment->GetComment();
+        echo json_encode($comment);
     }
 }
 

@@ -4,7 +4,7 @@ namespace Models;
 
 use Core\Model;
 use Exception;
-
+use PDO;
 
 class MainModel extends Model
 {
@@ -33,11 +33,11 @@ class MainModel extends Model
 
     public function GetComment()
     {
-        if( $response['status'] = 'success'){
         $sth=$this->dbh->prepare (
-            "SELECT * FROM Users"
+            "SELECT * FROM Comment"
         );
-        return $sth;
-        }
+        $sth->execute();
+        $comment = $sth->fetchAll(PDO::FETCH_ASSOC);
+        return $comment;   
     }
 }

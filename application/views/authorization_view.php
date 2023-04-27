@@ -10,9 +10,9 @@
                 style="font-family: 'Trebuchet MS';font-weight:700" placeholder="password" required>
             <div class="message">
                 <?php
-                    if (!empty($error)) {
-                        echo "<div>" . $error . "</div>";
-                    }
+                   if (!empty($_SESSION['errors'])) {
+					echo $_SESSION['errors'];
+                   }
                 ?>
             </div>
             <input id='click' type="submit" name="submitButton" class="registration-button">

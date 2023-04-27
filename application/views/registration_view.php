@@ -1,4 +1,4 @@
-
+<body style="background-color: slategray">
 <div class="container">
     <form action="registration/registration" method="POST">
         <h3 style="text-align: center; color: #ffff; font-weight: 700; font-size: 30px; font-family: 'Trebuchet MS';">
@@ -9,8 +9,8 @@
                     style="font-family: 'Trebuchet MS'; font-weight: 700" placeholder="email" required>
                 <div class="email-message">
                     <?php
-                        if (!empty($error_validation['email'])) {
-                            echo "<div>" . $error_validation['email'] . "</div>";
+                        if (!empty($_SESSION['error']['email'])) {
+                            echo $_SESSION['error']['email'];
                         }
                     ?>
                 </div>
@@ -19,8 +19,8 @@
                         style="font-family: 'Trebuchet MS';font-weight: 700" placeholder="username" required>
                     <div class="username-message">
                         <?php
-                            if (!empty($error_validation['username'])) {
-                                echo "<div>" . $error_validation['username'] . "</div>";
+                            if (!empty($_SESSION['error']['username'])) {
+                                echo $_SESSION['error']['username'];
                             }
                         ?>
                     </div>
@@ -29,8 +29,8 @@
                     style="font-family: 'Trebuchet MS';font-weight:700" placeholder="password" required>
                 <div class="password-message">
                     <?php
-                        if (!empty($error_validation['password'])) {
-                            echo "<div>" . $error_validation['password'] . "</div>";
+                        if (!empty($_SESSION['error']['password'])) {
+                            echo $_SESSION['error']['password'];
                         }
                     ?>
                 </div>
@@ -38,10 +38,10 @@
                     style="font-family: 'Trebuchet MS';font-weight: 700" placeholder="confirm password" required>
                 <div class="confirmation-message">
                     <?php
-                        if (!empty($error_validation['confirmation_password'])) {
-                            echo "<div>" . $error_validation['confirmation_password'] . "</div>";
+                        if (!empty($_SESSION['error']['confirmation_password'])) {
+                            echo $_SESSION['error']['confirmation_password'];
                             echo "<br>";
-                            echo "<div>" . $error_validation['check_email'] . "</div>";
+                            echo $_SESSION['error']['check_email'];
                         }
                     ?>
                 </div>
@@ -53,3 +53,8 @@
         <a href="http://guestbook/authorization" class="nav_livk">Уже зарегистрированы?</a>
     </div>
 </div>
+</body>
+
+<?php
+    if(!empty($_SESSION['error'])) session_unset();
+?>
