@@ -10,14 +10,17 @@ class ControllerRegistration extends Controller
 	public $user;
 	public function __construct()
 	{
+		parent::__construct();
 		$this->user = new UsersModel();
 	}
 
 	public function actionIndex()
 	{
 		if (isset($_SESSION['auth']) && $_SESSION['auth'])  header("Location:http://guestbook/main");
+
 		$this->view->generate('registration_view.php', 'template_view.php');
 	}
+	
 	private function ValidationUserMethod($email,$username,$password,$confirmation_password,$pregPass) 
 	{
 		if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {

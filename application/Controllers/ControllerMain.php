@@ -4,6 +4,7 @@ namespace Controllers;
 
 use Core\Controller;
 use Models\MainModel;
+use Models\UsersModel;
 
 
 class ControllerMain extends Controller
@@ -15,16 +16,17 @@ class ControllerMain extends Controller
 
     public function actionMain()
     {
-        if (!empty($_POST['username']) && !empty($_POST['text_comment'])) {
+        if (!empty($_POST['text_comment'])) {
     
             if (preg_match('/^[\p{L}\d\s]{3,30}$/ui', $_POST['text_comment'])) {
                 $text_comment = $_POST['text_comment'];
             } 
-            $username = $_POST['username'];
+  
             $getComment = new MainModel();
-            $comment = $getComment->setComment($username, $text_comment);
-
+            $comment = $getComment->setComment($text_comment);
             $response['status'] = 'success';
+            $response['avatar_type'] = $_SESSION['user_data']['avatar_type'];
+            $response['username'] = $_SESSION['user_data']['username'];
             echo json_encode($response);
         } else {
             $response['status'] = 'bad';
@@ -37,6 +39,18 @@ class ControllerMain extends Controller
         $comment = $GetComment->GetComment();
         echo json_encode($comment);
     }
-}
 
+    public function actionchangeUserAvatar() {
+        
+        if (!empty($_POST['id'])){
+            $changeUserAvatar = new UsersModel();
+            $UserAvatar = $changeUserAvatar->changeAvatar($_POST['id']);
+            if($UserAvatar) {
+                $_SESSION['user_data']['avatar_type'] = $_POST['id'];
+            }
+            echo $UserAvatar;
+        } 
+    
+    }
+}
 

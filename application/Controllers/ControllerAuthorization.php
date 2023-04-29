@@ -9,10 +9,11 @@ class ControllerAuthorization extends Controller
 	public function actionIndex()
 	{	
 		if (isset($_SESSION['auth']) && $_SESSION['auth']) header("Location: http://guestbook/main");
+	
 		$this->view->generate('authorization_view.php', 'template_view.php');
 	}
 
-	private function actionAuthorization()
+	public function actionAuthorization()
 	{
 
 		if (isset($_SESSION['auth']) && $_SESSION['auth']) header("Location: http://guestbook/authorization");

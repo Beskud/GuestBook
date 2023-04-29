@@ -13,7 +13,7 @@ document.getElementById('button-js').onclick = function () {
             let div_image = document.createElement("div");
             let image = document.createElement('img');
 
-            image.src = 'https://icons.veryicon.com/png/o/internet--web/prejudice/user-128.png';
+            image.src = "/application/public/images/"+response['avatar_type']+".png";
             div_image.append(image);
             image.style = 'width: 50px;background-color: darkgray;border-radius: 20px;margin-right: 15px;';
             name.style = 'margin-right:5px;font-size: 20px;font-family: monospace;';
@@ -23,7 +23,7 @@ document.getElementById('button-js').onclick = function () {
             container.style = " text-align: left;align-items: center;background-color: grey;border-radius: 10px;padding: 9px;height: auto;width: 36%; margin-botom: 5px;display: flex;"
             let com2 = document.createElement("br");
 
-            name.append(user);
+            name.append(response['username']);
             comment.append(text);
 
             value.append(name);
@@ -32,8 +32,9 @@ document.getElementById('button-js').onclick = function () {
             container.append(div_image);
             container.append(value);
 
-            document.body.appendChild(container);
-            document.body.appendChild(com2);
+    
+            document.getElementById('comment_container').append(container);
+            document.getElementById('comment_container').append(com2);
 
         } else {
             console.log('err')
@@ -43,10 +44,9 @@ document.getElementById('button-js').onclick = function () {
     }
 
     xhttp.open("POST", "http://guestbook/main/main");
-    let user = document.getElementById('user').value;
+
     let text = document.getElementById('text').value;
 
-    formData.append('username', user);
     formData.append('text_comment', text);
 
     xhttp.send(formData);
@@ -59,9 +59,12 @@ window.onload = function () {
 
         console.log(this.responseText);
         let data = JSON.parse(this.responseText);
+   
         console.log(data);
         data.forEach(function (v) {
 
+         
+            
             let container = document.createElement("div");
             let container2 = document.createElement("div");
             let value = document.createElement("div");
@@ -71,7 +74,7 @@ window.onload = function () {
             let name = document.createElement("div");
             let image = document.createElement('img');
 
-            image.src = 'https://icons.veryicon.com/png/o/internet--web/prejudice/user-128.png';
+            image.src = "/application/public/images/"+v['avatar_type']+".png";
             div_image.append(image);
             image.style = 'width: 50px;background-color: darkgray;border-radius: 20px;margin-right: 15px;';
             name.style = 'margin-right:5px;font-size: 20px;font-family: monospace;';
@@ -81,7 +84,7 @@ window.onload = function () {
             container.style = "text-align: left;align-items: center;background-color: grey;border-radius: 10px;padding: 9px;height: auto;width: 36%; margin-botom: 5px;display: flex;"
             let com2 = document.createElement("br");
 
-            value.append(v.name);
+            value.append(v.username);
             value2.append(v.text_comment);
 
             container2.append(value);
@@ -90,14 +93,34 @@ window.onload = function () {
             container.append(div_image);
             container.append(container2);
 
-            document.body.appendChild(container);
-            document.body.appendChild(com2);
+
+            document.getElementById('comment_container').append(container);
+            document.getElementById('comment_container').append(com2);
 
         })
     }
     xhttp.open("POST", "http://guestbook/main/getComment");
     xhttp.send();
 }
+
+
+    $('.avatar-item').on( "click", function() {
+        $.ajax({ 
+            type: "POST",   
+            url: "http://guestbook/main/changeUserAvatar",   
+            async: false,
+            data: {
+                "id": this.id
+            },
+            success : function(text)
+            {
+                swal("Success!", "You avatar changed!", "success");
+                console.log(text)
+                response = text;
+            }
+    });
+
+})
 
 
 

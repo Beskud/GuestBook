@@ -1,4 +1,4 @@
-<body style="background-color: slategray">
+
 <div class="container">
     <form action="registration/registration" method="POST">
         <h3 style="text-align: center; color: #ffff; font-weight: 700; font-size: 30px; font-family: 'Trebuchet MS';">
@@ -53,7 +53,6 @@
         <a href="http://guestbook/authorization" class="nav_livk">Уже зарегистрированы?</a>
     </div>
 </div>
-</body>
 
 <?php
     if(!empty($_SESSION['error'])) session_unset();

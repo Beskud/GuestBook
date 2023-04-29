@@ -83,6 +83,7 @@ body {
     text-align: center;
     text-decoration: none;
 }
+
 .container {
     margin-top: 10%;
 }
@@ -150,3 +151,37 @@ body {
     justify-content: center;
 }
 
+
+.circle {
+    height: 40px;
+    width: 40px;
+    background-color: #ffffff;
+    border-radius: 50%;
+    display: flex;
+    place-self: center;
+    justify-content: center;
+    margin-left: 10px;
+    border-color: black;
+  }
+
+.none-icon{
+    width: 35px;
+    height: 35px;
+    border: none;
+}
+
+.avatar-item {
+    max-width: 33%;
+    display: block;
+    width: 100%;
+    cursor: pointer;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+  
+}
+
+.avatar-item:hover{
+
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  
+
+}

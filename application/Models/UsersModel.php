@@ -36,5 +36,22 @@ class UsersModel extends Model
             return false;
         }
     }
-}
+
   
+    public function changeAvatar ($avatar_type){
+
+        $sth = $this->dbh->prepare(
+            "UPDATE Users
+                SET avatar_type = :avatar_type
+                WHERE id = :user_id"
+        );
+
+        $user_id = $_SESSION['user_data']['id'];
+        $sth->bindParam(':avatar_type', $avatar_type);
+        $sth->bindParam(':user_id', $user_id);
+        $sth->execute();
+        return true;
+
+    }
+
+}
