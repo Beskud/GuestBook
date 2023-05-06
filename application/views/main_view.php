@@ -7,60 +7,54 @@ if (!isset($_SESSION['auth']) || $_SESSION['auth'] == false) {
 ?>
 
 <header>
-    <div style='display:flex;align-items:center;'>
+    <div style='display: flex;
+    align-items: center;
+    justify-content: space-between;margin:0px 15px;'>
         <img src="https://www.veryicon.com/download/png/internet--web/iview-3-x-icons/logo-apple?s=256"
             style="width: 52px;">
 
-        <div style='display:flex; margin-left: 40px;'>
-            <input class="search" type="search" placeholder="Search" style="width: 300px;height: 50px;">
-            <input class="search-button" type="button" style="width: 70px;height: 50px; padding-left: 35px;">
-        </div>
+       
         <div style="display: flex;
-            align-items: baseline;
+            align-items: center;
             color: teal;
             font-family: monospace;
-            margin-left: 50%;">
+            margin-left: 25%;">
 
-            <h3>
+            <h5 style="margin:0">
                 <?php
-
                 if ($_SESSION['auth']) {
                     echo $_SESSION['user_data']['username'];
                 } else {
                     echo '<a href="http://guestbook/authorization" style="  
-                        margin-left: 20%;
-                        text-decoration: none;
-                        font-size: xx-large;
-                        font-family: monospace;
-                        color: teal;">Authorization</a>
-                        <a href="http://guestbook/registration" style="  
-                        margin-left: 10%;
-                        text-decoration: none;
-                        font-size: xx-large;
-                        font-family: monospace;
-                        color: teal;">Registration</a>';
+                            margin-left: 20%;
+                            text-decoration: none;
+                            font-size: xx-large;
+                            font-family: monospace;
+                            color: teal;">Authorization</a>
+                            <a href="http://guestbook/registration" style="  
+                            margin-left: 10%;
+                            text-decoration: none;
+                            font-size: xx-large;
+                            font-family: monospace;
+                            color: teal;">Registration</a>';
                 }
                 ?>
-            </h3>
+            </h5>
             <button class="circle" id="open-model-btn">
                 <img src=<?php echo "/application/public/images/" . $_SESSION['user_data']['avatar_type'] . ".png" ?>
                     class="none-icon">
             </button>
 
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            <button type="button" class="btn btn-warning" style="margin-left: 10px;" data-bs-toggle="modal"
+                data-bs-target="#exampleModal">
                 Chose your avatar
             </button>
+        
+            <a href="http://guestbook/logout"  class="btn btn-outline-danger" style="margin-left: 10px;" 
+                >
+                Logout
+            </a>
 
-
-
-
-            <a href="http://guestbook/logout" style="  
-                    margin-left: 10%;
-                    text-decoration: none;
-                    font-size: x-large;
-                    font-family: monospace;
-                    color: teal;
-                    margin-left: 100px;">Logout</a>
         </div>
     </div>
 </header>
@@ -78,9 +72,9 @@ if (!isset($_SESSION['auth']) || $_SESSION['auth'] == false) {
         <textarea id="text" name="text_comment" cols="30" rows="50"
             style="width: 475px;height: 110px;border-color:black" required></textarea>
         <br />
-        <button id="button-js"
-            style="width: 100px;height: 30px;background-color:teal;border-radius:7px;border-color: cadetblue;font-family: monospace;font-size: 14px;">Отправить</button>
-</div>
+
+        <button id="button-js" type="button" class="btn btn-outline-info"> Отправить</button>
+       </div>
 <hr>
 </div>
 

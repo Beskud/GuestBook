@@ -21,10 +21,13 @@ class ControllerMain extends Controller
             if (preg_match('/^[\p{L}\d\s]{3,30}$/ui', $_POST['text_comment'])) {
                 $text_comment = $_POST['text_comment'];
             } 
-  
             $getComment = new MainModel();
-            $comment = $getComment->setComment($text_comment);
-            $response['status'] = 'success';
+            $comment_id = null;
+            if (isset($_POST['comment_id'])){
+                $comment_id = $_POST['comment_id'];
+            };
+            $response = $getComment->setComment($text_comment, $comment_id);
+            
             $response['avatar_type'] = $_SESSION['user_data']['avatar_type'];
             $response['username'] = $_SESSION['user_data']['username'];
             echo json_encode($response);

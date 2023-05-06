@@ -57,3 +57,9 @@
 <?php
     if(!empty($_SESSION['error'])) session_unset();
 ?>
+
+<script>
+
+document.body.style = 'background-color: slategray;'
+
+</script>

@@ -5,9 +5,10 @@
 body {
     background-color: white;
 }
-
+.bg{
+    background-color: slategray;
+}
 .registration-button {
-
     width: 100%;
     border: none;
     padding: 20px 15px;
@@ -26,26 +27,21 @@ body {
     padding: 20px 15px;
     border: none;
     margin-bottom: 10px;
-    width: 93%;
-
+    width: 100%;
 }
 
 .position-registr {
-
     display: grid;
     margin: 0 auto;
     width: 30%;
-
 }
 
 .registration-button:hover {
-
     transition: background-color .3s linear;
     background-color: rgb(6, 98, 98);
 }
 
 .default-input-registration:hover {
-
     transition: background-color .3s linear;
     background-color: gray
 }
@@ -58,7 +54,6 @@ body {
 .email-message {
     display: flex;
     color: red;
-    ;
 }
 
 .username-message {
@@ -89,7 +84,6 @@ body {
 }
 
 
-
 .nav_livk {
     text-align: center;
     text-decoration: none;
@@ -97,7 +91,6 @@ body {
 
 
 .registration-button {
-
     width: 100%;
     border: none;
     padding: 20px 15px;
@@ -116,30 +109,24 @@ body {
     padding: 20px 15px;
     border: none;
     margin-bottom: 10px;
-    width: 93%;
-
 }
 
 .position-registr {
-
     display: grid;
     margin: 0 auto;
     width: 30%;
-
 }
 
 .registration-button:hover {
-
     transition: background-color .3s linear;
     background-color: rgb(6, 98, 98);
 }
 
 .default-input-registration:hover {
-
     transition: background-color .3s linear;
     background-color: gray
-}
 
+}
 
 .default-input-registration:focus {
     border: none;
@@ -151,7 +138,6 @@ body {
     justify-content: center;
 }
 
-
 .circle {
     height: 40px;
     width: 40px;
@@ -162,9 +148,9 @@ body {
     justify-content: center;
     margin-left: 10px;
     border-color: black;
-  }
+}
 
-.none-icon{
+.none-icon {
     width: 35px;
     height: 35px;
     border: none;
@@ -176,12 +162,8 @@ body {
     width: 100%;
     cursor: pointer;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
-  
 }
 
-.avatar-item:hover{
-
+.avatar-item:hover {
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-  
-
 }
