@@ -6,5 +6,5 @@ This is a simple example site that shows the logic of user registration and auth
 ![](https://github.com/Beskud/Optional/blob/main/comment_and_reply_logic.gif)
   3.User avatar change logic.
 ![](https://github.com/Beskud/Optional/blob/main/change_user_avatar_logic.gif)
-  4.Logic for deleting comments.
+  4.Logic for deleting comments if you admin.
 ![](https://github.com/Beskud/Optional/blob/main/remove_comments_logic.gif)
