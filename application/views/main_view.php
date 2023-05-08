@@ -2,24 +2,19 @@
 session_start();
 if (!isset($_SESSION['auth']) || $_SESSION['auth'] == false) {
     header("Location: http://guestbook/authorization");
-
 }
 ?>
-
 <header>
     <div style='display: flex;
     align-items: center;
     justify-content: space-between;margin:0px 15px;'>
         <img src="https://www.veryicon.com/download/png/internet--web/iview-3-x-icons/logo-apple?s=256"
             style="width: 52px;">
-
-       
         <div style="display: flex;
             align-items: center;
             color: teal;
             font-family: monospace;
             margin-left: 25%;">
-
             <h5 style="margin:0">
                 <?php
                 if ($_SESSION['auth']) {
@@ -44,29 +39,21 @@ if (!isset($_SESSION['auth']) || $_SESSION['auth'] == false) {
                 <img src=<?php echo "/application/public/images/" . $_SESSION['user_data']['avatar_type'] . ".png" ?>
                     class="none-icon">
             </button>
-
             <button type="button" class="btn btn-warning" style="margin-left: 10px;" data-bs-toggle="modal"
                 data-bs-target="#exampleModal">
                 Chose your avatar
             </button>
-        
-            <a href="http://guestbook/logout"  class="btn btn-outline-danger" style="margin-left: 10px;" 
-                >
+            <a href="http://guestbook/logout" class="btn btn-outline-danger" style="margin-left: 10px;">
                 Logout
             </a>
-
         </div>
     </div>
 </header>
 <hr>
-
 <div id="comment_container">
-
 </div>
-
-
 <div>
-    <p>
+    <p style="margin-left: 5px;">
         <label>Комментарий:</label>
         <br />
         <textarea id="text" name="text_comment" cols="30" rows="50"
@@ -74,11 +61,9 @@ if (!isset($_SESSION['auth']) || $_SESSION['auth'] == false) {
         <br />
 
         <button id="button-js" type="button" class="btn btn-outline-info"> Отправить</button>
-       </div>
+</div>
 <hr>
 </div>
-
-
 
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -89,22 +74,15 @@ if (!isset($_SESSION['auth']) || $_SESSION['auth'] == false) {
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-
                 <div class="d-flex justify-content-between">
                     <img class="avatar-item p-2" id="4" src="/application/public/images/4.png" alt="">
                     <img class="avatar-item p-2" id="5" src="/application/public/images/5.png" alt="">
                     <img class="avatar-item p-2" id="6" src="/application/public/images/6.png" alt="">
                 </div>
             </div>
-
-
             <div class="modal-footer">
-
             </div>
         </div>
     </div>
 </div>
-
-
-
 </div>

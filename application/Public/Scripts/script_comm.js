@@ -40,7 +40,7 @@ function sendComment(text_comment,comment_id = false) {
 
     if (text_comment) formData.append('text_comment', text_comment);
     if (comment_id) formData.append('comment_id', comment_id);
-
+ 
     xhttp.send(formData);
     xhttp.onload = function () {
         response = JSON.parse(this.responseText)
@@ -62,10 +62,26 @@ function sendComment(text_comment,comment_id = false) {
     }   
 }
 
+function removeComment(btn) {
+    btn.addEventListener('click', function (e) {
+        comment_id = this.dataset.remove
+        let formData = new FormData();
+        const xhttp = new XMLHttpRequest();
+        formData.append('comment_id', comment_id);
+        xhttp.open("POST", "http://guestbook/main/remove");
+        xhttp.send(formData)
+        xhttp.onload = function () {
+            console.log(JSON.parse(this.responseText))
+            response = JSON.parse(this.responseText)
+            if (response['status'] == 'success') document.getElementById('tree_comments_'+comment_id).remove()
+        }
+    })
+}
+
 function createSubComment(v = {}) {
     v.comment_id = this.dataset.parent
     v.text_comment = document.getElementById('first_answear_'+this.dataset.parent).value
-    sendComment(v.text_comment,v.comment_id)
+    sendComment(v.text_comment,v.comment_id,v.created_at)
 }
 
 function createComment(v) {
@@ -77,6 +93,8 @@ function createComment(v) {
     let value2 = document.createElement("div");
     let div_image = document.createElement("div");
     let btn = document.createElement('button');
+    let remove_icon = document.createElement('div');
+    let datatime = document.createElement('div');
 
     main_container.id = 'tree_comments_' + v.id;
     btn.classList = 'btn btn-success btn-sm'
@@ -91,19 +109,29 @@ function createComment(v) {
     name.style = 'margin-right:5px;font-size: 20px;font-family: monospace;';
     v.text_comment.style = "font-family: monospace;font-size: 17px;";
     value.style = 'margin-right:5px;font-size: 20px;font-family: monospace;';
-    container.style = "margin-left: 10px;text-align: left;align-items: center;background-color: grey;border-radius: 10px;padding: 9px;height: auto;width: 36%; margin-botom: 5px;display: flex;"
+
+    remove_icon.classList = 'remove icon'
+    remove_icon.dataset.remove = v.id
+    container.style = "margin-left: 10px;text-align: left;align-items: center;background-color: grey;border-radius: 10px;padding: 9px;height: auto;width: 36%; margin-botom: 5px;display: flex;position:relative"
     let com2 = document.createElement("br");
 
-    this.subComment(btn,v.id,text)
-    
+    this.subComment(btn,v.id,text,datatime)
     value.append(v.username);
     value2.append(v.text_comment);
-
+    datatime.append(v.created_at);
     container2.append(value);
     container2.append(value2);
     container.append(div_image);
     container.append(container2);
+
+    if (document.getElementById('is_admin')) {
+        removeComment(remove_icon)
+        container.append(remove_icon)
+    }
+    
     container.append(value2);
+    container.append(datatime);
+    datatime.style = 'font-size: 10px;margin-left: 30%;margin-bottom: auto;'; 
 
     if (v.comment_id == null) {
         document.getElementById('comment_container').append(main_container);
@@ -113,18 +141,16 @@ function createComment(v) {
     } else {
         if ((document.getElementById('tree_comments_' + v.comment_id))) {
             document.getElementById('tree_comments_' + v.comment_id).append(main_container);
-            container.style = "margin-top:10px; margin-left:40px;text-align: left;align-items: center;background-color: grey;border-radius: 10px;padding: 9px;height: auto;width: 36%; margin-botom: 5px;display: flex;"
+            container.style = "margin-top:10px; margin-left:40px;text-align: left;align-items: center;background-color: grey;border-radius: 10px;padding: 9px;height: auto;width: 36%; margin-botom: 5px;display: flex;position:relative"
             main_container.append(container, btn, com2)
         }
     }
 }
 
-
 window.onload = function () {
     const xhttp = new XMLHttpRequest();
     xhttp.open("POST", "http://guestbook/main/getComment");
     xhttp.send()
-
     xhttp.onload = function () {
         let data = JSON.parse(this.responseText);
         data.forEach(function (v) {
@@ -146,8 +172,6 @@ $('.avatar-item').on("click", function () {
             .then(function(isConfirm) {
                 window.location.reload() 
             });
-          
         }
     });
-
 })

@@ -26,6 +26,13 @@ class MainModel extends Model
             $sth->bindParam(':comment_id', $comment_id);
             $sth->execute();
             $response['id'] = $this->dbh->lastInsertId();
+
+            $sth = $this->dbh->prepare("SELECT created_at FROM Comment WHERE id = :id");
+            $sth->bindParam(':id', $response['id']);
+            $sth->execute();
+            $result = $sth->fetch(PDO::FETCH_ASSOC);
+            $response['created_at'] = $result['created_at'];
+
             $response['comment_id'] = $comment_id;
             $response['text_comment'] = $text_comment;
             $response['status'] = 'success';
@@ -37,13 +44,23 @@ class MainModel extends Model
         return $response;
     }
 
+    public function removeComment($comment_id) {
+        $sth = $this->dbh->prepare (
+            "UPDATE `Comment`
+            SET deleted_at = CURRENT_TIMESTAMP
+            WHERE id = :id"
+        );
+        $sth->bindParam(':id', $comment_id);
+        $sth->execute();
+    }
+
     public function GetComment()
     {
         $sth=$this->dbh->prepare (
-            "SELECT  `Comment`.id, username, text_comment, user_id, comment_id, avatar_type
-                FROM `Comment`
-                INNER JOIN Users
-                ON `Users`.id = user_id"
+            "SELECT `Comment`.id, `Users`.username, `Comment`.text_comment, `Comment`.user_id, `Comment`.comment_id, `Comment`.created_at, `Users`.avatar_type
+            FROM `Comment`
+            INNER JOIN `Users` ON `Users`.id = `Comment`.user_id
+            WHERE `Comment`.deleted_at IS NULL"
         );
         $sth->execute();
         $comment = $sth->fetchAll(PDO::FETCH_ASSOC);
