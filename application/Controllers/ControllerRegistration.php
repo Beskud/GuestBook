@@ -16,6 +16,8 @@ class ControllerRegistration extends Controller
 
 	public function actionIndex()
 	{
+
+		dump(['121321' => [ 'qewfwerwer' => 1]]);	
 		if (isset($_SESSION['auth']) && $_SESSION['auth'])
 			header("Location: /main");
 
@@ -29,11 +31,11 @@ class ControllerRegistration extends Controller
 			return false;
 		}
 
-		if (!preg_match('/^[\p{L}\d\s!.\?\'":;\[\]{}\#$@%&]{5,25}$/', $username)) {
+		if (!preg_match('/^(?=.*[a-zA-Z])[^\s<>;:\\\\\|\/\[\]\{\}\?\*\(\)\'\"`]{5,25}$/', $username)) {
 			$_SESSION['error']['username'] = 'Invalid username format';
 			return false;
 		}
-
+		
 		if ($password != $confirmation_password) {
 			$_SESSION['error']['confirmation_password'] = 'Password mismatch';
 			return false;
@@ -42,6 +44,10 @@ class ControllerRegistration extends Controller
 		foreach ($pregPass as $key => $value) {
 			if (!preg_match($value, $password)) {
 				$_SESSION['error']['password'] = 'The password is not valid. Does not contain ' . $key;
+				return false;
+			}
+			elseif (!preg_match('/^(?=.*[a-zA-Z])[^\s<>;:\\\\\|\/\[\]\{\}\?\*\(\)\'\"`]{5,25}$/', $password)){
+				$_SESSION['error']['password'] = 'Password contains prohibited characters';
 				return false;
 			}
 		}

@@ -1,0 +1,11 @@
+{
+    "autoload": {
+        "classmap": ["application/Models", "application/Controllers", "application/Core", "application/css", "application/public", "application/views", "application/bootstrap.php"]
+    },
+    "require-dev": {
+        "mp091689/dump-die": "^1.0"
+    },
+    "require": {
+        "guzzlehttp/guzzle": "^7.5"
+    }
+}

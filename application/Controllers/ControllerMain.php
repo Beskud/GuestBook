@@ -23,7 +23,7 @@ class ControllerMain extends Controller
     public function actionMain()
     {
         if (!empty($_POST['text_comment'])) {
-            if (preg_match('/^[\p{L}\d\s,.\(\)!\";:\[\]{}\#$@%&]{3,60}$/ui', $_POST['text_comment'])) {
+            if (preg_match('/^[\p{L}\d\s,.\(\)!\";:\[\]{}\#$@%&]{1,60}$/ui', $_POST['text_comment'])) {
                 $text_comment = $_POST['text_comment'];
                 
                 $created = $_POST['created'];
