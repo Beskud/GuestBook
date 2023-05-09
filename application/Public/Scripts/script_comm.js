@@ -36,7 +36,7 @@ function hideSubBlock(comment_id) {
 function sendComment(text_comment,comment_id = false) {
     let formData = new FormData();
     const xhttp = new XMLHttpRequest();
-    xhttp.open("POST", "http://guestbook/main/main");
+    xhttp.open("POST", "/main/main");
 
     if (text_comment) formData.append('text_comment', text_comment);
     if (comment_id) formData.append('comment_id', comment_id);
@@ -68,7 +68,7 @@ function removeComment(btn) {
         let formData = new FormData();
         const xhttp = new XMLHttpRequest();
         formData.append('comment_id', comment_id);
-        xhttp.open("POST", "http://guestbook/main/remove");
+        xhttp.open("POST", "/main/remove");
         xhttp.send(formData)
         xhttp.onload = function () {
             console.log(JSON.parse(this.responseText))
@@ -90,11 +90,12 @@ function createComment(v) {
     let name = document.createElement("div");
     let container2 = document.createElement("div");
     let value = document.createElement("div");
-    let value2 = document.createElement("div");
+    let text_comment_block = document.createElement("div");
     let div_image = document.createElement("div");
     let btn = document.createElement('button');
     let remove_icon = document.createElement('div');
     let datatime = document.createElement('div');
+
 
     main_container.id = 'tree_comments_' + v.id;
     btn.classList = 'btn btn-success btn-sm'
@@ -107,41 +108,44 @@ function createComment(v) {
     div_image.append(image);
     image.style = 'width: 50px;background-color: darkgray;border-radius: 20px;margin-right: 15px;';
     name.style = 'margin-right:5px;font-size: 20px;font-family: monospace;';
-    v.text_comment.style = "font-family: monospace;font-size: 17px;";
-    value.style = 'margin-right:5px;font-size: 20px;font-family: monospace;';
+    text_comment_block.style = "font-family: monospace;font-size: 17px;white-space:nowrap";
+    value.style = 'margin-right:5px;font-size: 20px;font-family: monospace;white-space:nowrap';
 
     remove_icon.classList = 'remove icon'
     remove_icon.dataset.remove = v.id
-    container.style = "margin-left: 10px;text-align: left;align-items: center;background-color: grey;border-radius: 10px;padding: 9px;height: auto;width: 36%; margin-botom: 5px;display: flex;position:relative"
+    container.style = "margin-left: 10px;text-align: left;align-items: center;background-color: grey;border-radius: 10px;padding: 9px;height: auto;width: 57%; margin-botom: 5px;display: flex;position:relative"
     let com2 = document.createElement("br");
-
+    main_container.style = 'position:relative'
     this.subComment(btn,v.id,text,datatime)
     value.append(v.username);
-    value2.append(v.text_comment);
+    text_comment_block.append(v.text_comment);
     datatime.append(v.created_at);
     container2.append(value);
-    container2.append(value2);
+    container2.append(text_comment_block);
     container.append(div_image);
     container.append(container2);
 
     if (document.getElementById('is_admin')) {
         removeComment(remove_icon)
-        container.append(remove_icon)
+        container.append(remove_icon)   
     }
     
-    container.append(value2);
-    container.append(datatime);
-    datatime.style = 'font-size: 10px;margin-left: 30%;margin-bottom: auto;'; 
+    container.append(text_comment_block);
+  
+    datatime.style = 'font-size: 10px;top: 2px;margin-left: 8%;margin-bottom: auto;position: absolute;z-index: 1;'; 
 
     if (v.comment_id == null) {
         document.getElementById('comment_container').append(main_container);
+        main_container.append(datatime);
         document.getElementById('tree_comments_' + v.id).append(container);
         document.getElementById('tree_comments_' + v.id).append(btn);
         document.getElementById('tree_comments_' + v.id).append(com2);
+        
     } else {
         if ((document.getElementById('tree_comments_' + v.comment_id))) {
+            main_container.append(datatime);
             document.getElementById('tree_comments_' + v.comment_id).append(main_container);
-            container.style = "margin-top:10px; margin-left:40px;text-align: left;align-items: center;background-color: grey;border-radius: 10px;padding: 9px;height: auto;width: 36%; margin-botom: 5px;display: flex;position:relative"
+            container.style = "margin-top:10px; margin-left:40px;text-align: left;align-items: center;background-color: grey;border-radius: 10px;padding: 9px;height: auto;width:57%; margin-botom: 5px;display: flex;position:relative; white-space:nowrap"
             main_container.append(container, btn, com2)
         }
     }
@@ -149,7 +153,7 @@ function createComment(v) {
 
 window.onload = function () {
     const xhttp = new XMLHttpRequest();
-    xhttp.open("POST", "http://guestbook/main/getComment");
+    xhttp.open("POST", "/main/getComment");
     xhttp.send()
     xhttp.onload = function () {
         let data = JSON.parse(this.responseText);
@@ -162,7 +166,7 @@ window.onload = function () {
 $('.avatar-item').on("click", function () {
     $.ajax({
         type: "POST",
-        url: "http://guestbook/main/changeUserAvatar",
+        url: "/main/changeUserAvatar",
         async: false,
         data: {
             "id": this.id

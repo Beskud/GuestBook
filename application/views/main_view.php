@@ -1,8 +1,10 @@
 <?php
 session_start();
 if (!isset($_SESSION['auth']) || $_SESSION['auth'] == false) {
-    header("Location: http://guestbook/authorization");
+    header("Location: /authorization");
 }
+
+
 ?>
 <header>
     <div style='display: flex;
@@ -20,13 +22,13 @@ if (!isset($_SESSION['auth']) || $_SESSION['auth'] == false) {
                 if ($_SESSION['auth']) {
                     echo $_SESSION['user_data']['username'];
                 } else {
-                    echo '<a href="http://guestbook/authorization" style="  
+                    echo '<a href="/authorization" style="  
                             margin-left: 20%;
                             text-decoration: none;
                             font-size: xx-large;
                             font-family: monospace;
                             color: teal;">Authorization</a>
-                            <a href="http://guestbook/registration" style="  
+                            <a href="/registration" style="  
                             margin-left: 10%;
                             text-decoration: none;
                             font-size: xx-large;
@@ -43,7 +45,7 @@ if (!isset($_SESSION['auth']) || $_SESSION['auth'] == false) {
                 data-bs-target="#exampleModal">
                 Chose your avatar
             </button>
-            <a href="http://guestbook/logout" class="btn btn-outline-danger" style="margin-left: 10px;">
+            <a href="/logout" class="btn btn-outline-danger" style="margin-left: 10px;">
                 Logout
             </a>
         </div>

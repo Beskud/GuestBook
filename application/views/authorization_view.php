@@ -20,7 +20,7 @@
             </div>
         </form>
         <div class="position-registr">
-            <a href="http://guestbook/registration" class="nav_livk">Еще не зарегистрированы?</a>
+            <a href="/registration" class="nav_livk" style="color: #ffff">Еще не зарегистрированы?</a>
         </div>
     </div>
 

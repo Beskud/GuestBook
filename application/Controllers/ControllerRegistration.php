@@ -16,67 +16,73 @@ class ControllerRegistration extends Controller
 
 	public function actionIndex()
 	{
-		if (isset($_SESSION['auth']) && $_SESSION['auth'])  header("Location:http://guestbook/main");
+		if (isset($_SESSION['auth']) && $_SESSION['auth'])
+			header("Location: /main");
 
 		$this->view->generate('registration_view.php', 'template_view.php');
 	}
-	
-	private function ValidationUserMethod($email,$username,$password,$confirmation_password,$pregPass) 
+
+	private function ValidationUserMethod($email, $username, $password, $confirmation_password, $pregPass)
 	{
-		if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+		if (!filter_var($email, FILTER_VALIDATE_EMAIL) || !preg_match('/^[A-Za-z.@]{1,100}$/', $email)) {
 			$_SESSION['error']['email'] = "Invalid email format";
-			header("Location: http://guestbook/registration");
+			return false;
 		}
-		if (!preg_match('/^[a-zA-Z0-9]{5,}$/', $username)) {
+
+		if (!preg_match('/^[\p{L}\d\s!.\?\'":;\[\]{}\#$@%&]{5,25}$/', $username)) {
 			$_SESSION['error']['username'] = 'Invalid username format';
-			header("Location: http://guestbook/registration");
+			return false;
 		}
+
 		if ($password != $confirmation_password) {
 			$_SESSION['error']['confirmation_password'] = 'Password mismatch';
-			header("Location: http://guestbook/registration");
+			return false;
 		}
 
 		foreach ($pregPass as $key => $value) {
 			if (!preg_match($value, $password)) {
 				$_SESSION['error']['password'] = 'The password is not valid. Does not contain ' . $key;
-				header("Location: http://guestbook/registration");
+				return false;
 			}
 		}
+		return true;
 	}
+
 	public function actionRegistration()
-	{	
+	{
+		$redirect_to = '/authorization';
+
+		if (isset($_SESSION['auth']) && $_SESSION['auth'])
+			header("Location: /main");
+
 		$pregPass = [
 			'digits' => '@[0-9]@',
 			'capital letters' => '#[A-Z]+#',
 			'lowercase letters' => '#[a-z]+#'
 		];
 
-		$error_validation = [];
+		if (
+			isset($_POST['email']) && isset($_POST['username']) &&
+			isset($_POST['password']) && isset($_POST['confirmation_password'])
+		) {
 
-		if (isset($_POST['email']) && isset($_POST['username']) &&
-			isset($_POST['password']) && isset($_POST['confirmation_password'])) {
-		
 			$email = $_POST['email'];
 			$username = $_POST['username'];
 			$password = $_POST['password'];
 			$confirmation_password = $_POST['confirmation_password'];
-			}
-
+		}
 	
-		$this->ValidationUserMethod($email,$username,$password,$confirmation_password,$pregPass);
-
-		if (isset($_SESSION['auth']) && $_SESSION['auth'])  header("Location:http://guestbook/main");
+		$validate = $this->ValidationUserMethod($email, $username, $password, $confirmation_password, $pregPass);
 		
-
-		$setUser = $this->user->setUser($email,$username,$password);
-
-		if (!$setUser) {
-			$_SESSION['error']['email'] = 'This email or username already exists';
-			header("Location: http://guestbook/registration");
+		if (!$validate) {
+			$redirect_to = '/registration'; 
 		} else {
-			header("Location: http://guestbook/main");	
-		}		
+			$setUser = $this->user->setUser($email, $username, $password);
+			if (!$setUser) {
+				$_SESSION['error']['email'] = 'This email or username already exists';
+				$redirect_to = '/registration';
+			} 
+		}
+		header('Location: '.$redirect_to);
 	}
 }
-
-

@@ -50,7 +50,7 @@
     </form>
     <br>
     <div class="position-registr">
-        <a href="http://guestbook/authorization" class="nav_livk">Уже зарегистрированы?</a>
+        <a href="/authorization" class="nav_livk" style="color: #ffff";>Уже зарегистрированы?</a>
     </div>
 </div>
 
